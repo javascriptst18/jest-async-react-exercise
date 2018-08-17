@@ -1,0 +1,36 @@
+{
+  "name": "jest-react-testing",
+  "description" : "Example react app to use for integration and snapshot testing",
+  "private": true,
+  "version": "0.1.0",
+  "author": "Jesper Orb <jesperorb@gmail.com> (https://jesperorb.com/)",
+  "license": "MIT",
+  "dependencies": {
+    "enzyme": "3.4.2",
+    "enzyme-adapter-react-16": "1.2.0",
+    "enzyme-to-json": "3.3.4",
+    "fetch-mock": "6.5.2",
+    "isomorphic-fetch": "2.2.1",
+    "prop-types": "15.6.2",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2",
+    "react-scripts": "1.1.4",
+    "react-test-renderer": "16.4.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "eslint-config-airbnb": "17.1.0",
+    "eslint-config-prettier": "3.0.1",
+    "eslint-plugin-react": "7.11.1"
+  },
+  "jest": {
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ]
+  }
+}
