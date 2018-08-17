@@ -21,7 +21,8 @@ it('button style should be disabled on click, check style', () => {
  * but we have to check the snapshots manually.
  */
 it('should match snapshot', () => {
-
+  const wrapper = shallow(<Button onClick={() => {}}/>);
+  expect(toJSON(wrapper)).toMatchSnapshot();
 })
 
 it('button state should be disabled on click, check state', () => {

@@ -38,7 +38,7 @@ it('populate list with rates', () => {
   const wrapper = shallow(<App rates={rates} />);
   const list = wrapper.find('[data-test="list"]');
   expect(list.children()).toHaveLength(168);
-})
+});
 
 it('should populate list with rates from api', () => {
   fetchMock.get(`http://data.fixer.io/api/latest?base=EUR&access_key=${API_KEY}&format=1`, responseObject);
@@ -46,7 +46,7 @@ it('should populate list with rates from api', () => {
   return flushAllPromises().
     then(() => {
       expect(wrapper.find('[data-test="list"]').text()).toContain("AUD");
-    })
+    });
 });
 
 it('first rate should be AED', () => {
