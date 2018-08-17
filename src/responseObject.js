@@ -1,4 +1,4 @@
-export default {
+const responseObject = {
   "success": true,
   "timestamp": 1534481302,
   "base": "EUR",
@@ -174,3 +174,5 @@ export default {
     "ZWL": 366.823982
   }
 }
+
+export default responseObject;
