@@ -43,16 +43,47 @@ it('populate list with rates', () => {
 it('should populate list with rates from api', () => {
   fetchMock.get(`http://data.fixer.io/api/latest?base=EUR&access_key=${API_KEY}&format=1`, responseObject);
   const wrapper = mount(<App />);
-  return flushAllPromises().
-    then(() => {
+  // Force Jest to finish all API-calls
+  return flushAllPromises()
+    .then(() => {
+      // When API-calls are done, do some assertion
       expect(wrapper.find('[data-test="list"]').text()).toContain("AUD");
     });
 });
 
+it('should populate list with rates from api, async await edition', async () => {
+  fetchMock.get(`http://data.fixer.io/api/latest?base=EUR&access_key=${API_KEY}&format=1`, responseObject);
+  const wrapper = mount(<App />);
+  // Force Jest to finish all API-calls
+  await flushAllPromises();
+  expect(wrapper.find('[data-test="list"]').text()).toContain("AUD");
+});
+
 it('first rate should be AED', () => {
-  
+  const rates = mapObjectToArray(responseObject.rates);
+  const wrapper = shallow(<App rates={rates} />);
+  const list = wrapper.find('[data-test="list"]');
+  const firstParagraph = list.find('p').first();
+  expect(firstParagraph.text()).toContain('AED');
 });
 
 it('should be base EUR', () =>{
-  
+  const wrapper = shallow(<App />);
+  expect(wrapper.find('h1').text()).toContain('EUR');
+});
+
+
+// Extra 
+it('list should not be populated', () => {
+  // No mount, no fetch in component === no list
+  const wrapper = shallow(<App />);
+  expect(wrapper.find('[data-test="list"]').children()).toHaveLength(0);
+});
+
+it.skip('error message displays when fetch fails', async () => {
+  const message = 'You failed yo!';
+  fetchMock.get(`http://data.fixer.io/api/fail?base=fail&access_key=${API_KEY}&format=1`, { throws: { message } });
+  const wrapper = mount(<App base="fail" date="fail" />);
+  await flushAllPromises();
+  expect(wrapper.find('.error').text()).toEqual(message);
 });

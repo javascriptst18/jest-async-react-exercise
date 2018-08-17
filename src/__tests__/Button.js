@@ -4,15 +4,26 @@ import { mount, render, shallow } from 'enzyme';
 import Button from '../components/Button';
 
 it('button state should be enabled from start', () => {
-  
+  const wrapper = mount(<Button onClick={() => { }} />);
+  expect(wrapper.state().disabled).toBe(false);
 })
 
 it('button state should be disabled on click, check state', () => {
-  
+  const wrapper = mount(<Button onClick={() => { }} />);
+  expect(wrapper.state().disabled).toBe(false);
+  wrapper.find('[data-test="button"]').simulate('click');
+  expect(wrapper.state().disabled).toBe(true);
 })
 
 it('button style should be disabled on click, check style', () => {
-  
+  const wrapper = mount(<Button onClick={() => { }} />);
+  expect(wrapper.find('[data-test="button"]')
+    .hasClass('cursor-not-allowed'))
+    .toEqual(false);
+  wrapper.find('[data-test="button"]').simulate('click');
+  expect(wrapper.find('[data-test="button"]')
+    .hasClass('cursor-not-allowed'))
+    .toEqual(true);
 })
 
 /**
@@ -23,8 +34,11 @@ it('button style should be disabled on click, check style', () => {
 it('should match snapshot', () => {
   const wrapper = shallow(<Button onClick={() => {}}/>);
   expect(toJSON(wrapper)).toMatchSnapshot();
-})
+});
 
-it('button state should be disabled on click, check state', () => {
-   
-})
+it('button state should be disabled on click, match snapshot', () => {
+  const wrapper = shallow(<Button onClick={() => { }} />);
+  expect(toJSON(wrapper)).toMatchSnapshot("1. before click");
+  wrapper.find('[data-test="button"]').simulate('click');
+  expect(toJSON(wrapper)).toMatchSnapshot("2. after click");
+});
